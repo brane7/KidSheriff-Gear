@@ -1,0 +1,11 @@
+* {
+  
+}
+
+body {
+    margin: 0px;
+    background-color:#222;
+}
+
+
+@font-face { font-family: 'Futura BdCn BT'; src: url("futurabc.otf") format("opentype"); }

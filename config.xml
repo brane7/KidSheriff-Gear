@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/Sheriff" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="kP1G60ljcP.Sheriff" package="kP1G60ljcP" required_version="2.2"/>
+   
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <icon src="thumImg.jpg" height="320" width="320"/>
+   
+    <name>보안관</name>
+    <tizen:privilege name="http://developer.samsung.com/privilege/accessoryprotocol"/>
+    
+    <tizen:metadata key="AccessoryServicesLocation" value="res/xml/accessoryservices.xml"/>
+</widget>
