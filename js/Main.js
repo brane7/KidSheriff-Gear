@@ -6,7 +6,7 @@ var p; // shortcut to reference prototypes
 lib.properties = {
 	width: 320,
 	height: 320,
-	fps: 1,
+	fps: 30,
 	color: "#FFFFFF",
 	manifest: []
 };
@@ -27,15 +27,19 @@ lib.properties = {
 		
 		var helpBtn = this.helpBtn
 		
+		createjs.Ticker.addEventListener("tick", handleTick);
 		
-		setInterval(TimeValue, 500);
+		function handleTick(e){
+			TimeValue()
+		}
+		
 		
 		function TimeValue() {
 			timePannel.timeTf.text = timeDraw()
 			
 			timePannel.timeTf_second.text = S
 			
-		//	console.log(timeDraw())
+			
 		}
 		
 		
