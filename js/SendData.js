@@ -2,12 +2,12 @@ var SAAgent = null;
 var SASocket = null;
 var CHANNELID = 104;
 var ProviderAppName = "HelloAccessoryProvider";
-
+var connectActive= false
 
 //디버깅용 text
 function createHTML(log_string)
 {
- alert("log_string"+log_string);
+ //alert("log_string"+log_string);
 console.log(log_string)
  var log = document.getElementById('resultBoard');
  log.innerHTML = log.innerHTML + "<br> : " + log_string;
@@ -26,8 +26,13 @@ function onerror(err) {
 var agentCallback = {
  onconnect : function(socket) {
   SASocket = socket;
-  alert("HelloAccessory Connection established with RemotePeer");
+  SASocket.setSocketStatusListener(onconnectionlost);
+  
+  connectActive = true;
+  
+  //alert("HelloAccessory Connection established with RemotePeer");
   createHTML("startConnection");
+  
   SASocket.setSocketStatusListener(function(reason){
    console.log("Service connection lost, Reason : [" + reason + "]");
    disconnect();
@@ -43,10 +48,11 @@ var peerAgentFindCallback = {
   try {
    //호스트의 앱네임이 맞으면 호스트와 연결시켜줌 
    if (peerAgent.appName == ProviderAppName) {
-    SAAgent.setServiceConnectionListener(agentCallback);
-    SAAgent.requestServiceConnection(peerAgent);
+	    SAAgent.setServiceConnectionListener(agentCallback);
+	    SAAgent.requestServiceConnection(peerAgent);
+	   
    } else {
-    alert("Not expected app!! : " + peerAgent.appName);
+    //alert("Not expected app!! : " + peerAgent.appName);
    }
   } catch(err) {
    console.log("exception [" + err.name + "] msg[" + err.message + "]");
@@ -54,6 +60,10 @@ var peerAgentFindCallback = {
  },
  onerror : onerror
 }
+
+
+
+
 
 
 //연결상태를 이벤트주고 
@@ -65,8 +75,9 @@ function onsuccess(agents) {
    
    SAAgent.setPeerAgentFindListener(peerAgentFindCallback);
    SAAgent.findPeerAgents();
+  
   } else {
-   alert("Not found SAAgent!!");
+   //alert("Not found SAAgent!!");
   }
  } catch(err) {
   console.log("exception [" + err.name + "] msg[" + err.message + "]");
@@ -75,15 +86,33 @@ function onsuccess(agents) {
 
 
 //호스트와 연결 시켜줌 만약 연결되있으면 빠져나옴 
-connect()
+
+
+//연결이 끊어졌을경우 판별하여 계속 커넥션 지속
+  setInterval(intervalConnect, 3000)
+  
+  function intervalConnect(){
+	  if(!connectActive){
+		 // console.log("connect")
+		  connect()
+	  }else{
+		 // console.log("disconnect")
+	  }
+  } 
+  
+
+  
+ //connect()
 function connect() {
-	console.log('connect')
+	
  if (SASocket) {
-  alert('Already connected!');
+  //alert('Already connected!');
         return false;
     }
  try {
+
   webapis.sa.requestSAAgent(onsuccess, onerror);
+ 
  } catch(err) {
   console.log("exception [" + err.name + "] msg[" + err.message + "]");
  }
@@ -92,11 +121,13 @@ function connect() {
 
 //연결을 끊어주고 소켓 초기화 
 function disconnect() {
-	console.log('disconnect')
+	
  try {
   if (SASocket != null) {
+	  
    SASocket.close();
    SASocket = null;
+   
    createHTML("closeConnection");
   }
  } catch(err) {
@@ -125,4 +156,13 @@ function fetch() {
  }
 }
 
- 
+
+/////////////////
+
+function onconnectionlost (reason){
+	
+    console.log("Service Connection disconnected due to following reason : "+ reason);
+    disconnect()
+    connectActive  = false
+}
+

@@ -11,17 +11,38 @@
     
     <link rel="stylesheet" href="css/style.css" />
     
-    <script src="libs/easeljs-0.7.0.min.js"></script>
-	<script src="libs/tweenjs-0.5.0.min.js"></script>
-	<script src="libs/movieclip-0.7.0.min.js"></script>
-	<script src="js/SendData.js"></script>
-	<script src="js/Main.js"></script>
+ 
 
 
 
 
 </head>
-<script>
+
+</head>
+
+<body onload="init();" style="background-color:#808667;">
+
+	<div style=" width:320px; height:320px;  overflow:hidden">
+		<canvas id="canvas" width="320" height="320" ></canvas>
+	
+		
+		<video id="video" width="320" height="320" ></video>
+		<canvas id="canvas_capture" width="320" height="320" ></canvas>
+	</div>
+	
+	
+
+   <script src="libs/easeljs-0.7.0.min.js"></script>
+	<script src="libs/tweenjs-0.5.0.min.js"></script>
+	<script src="libs/movieclip-0.7.0.min.js"></script>
+	
+	<script src="js/Power.js"></script>
+	<script src="js/Capture.js"></script>
+	<script src="js/SendData.js"></script>
+	<script src="js/Main.js"></script>
+	
+	
+	<script>
 var canvas, stage, exportRoot;
 
 function init() {
@@ -36,15 +57,8 @@ function init() {
 	createjs.Ticker.addEventListener("tick", stage);
 }
 </script>
-</head>
 
-<body onload="init();" style="background-color:#808667;">
 
-	<div style=" width:320px; height:320px;  overflow:hidden">
-		<canvas id="canvas" width="320" height="320" ></canvas>
-	</div>
-	
-	
 </body>
 
 
