@@ -3,4 +3,6 @@
 #modify
 res/wgt/author-signature.xml
 res/wgt/js/Capture.js
+res/wgt/js/Main.js
+res/wgt/js/SendData.js
 res/wgt/signature1.xml

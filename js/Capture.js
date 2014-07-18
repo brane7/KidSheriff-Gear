@@ -5,24 +5,24 @@
  //var canvas = document.querySelector('canvas');
  var ctx = canvas_capture.getContext('2d');
  var localMediaStream = null;
- var imageData ;
+ var imageData="" ;
  var file;
- var captureInteval = ''
- var localStream = ''
-	 var canvas_capture =''
- 
+ var captureInteval = '';
+ var localStream = '';
+ var canvas_capture ='';
+ var deviceCameraActive = false
 		 
-		 videoSet()
-		 function videoSet(){
-			 
 
-	   tizen.filesystem.resolve("images", function(dir){
-		   var dir; //Directory object obtained from filesystem API
-			 var newDir = dir.createDirectory("Sheriff");   
-	   })
-		 
+ videoSet()
+function videoSet(){
+			 
+	 		var deviceCapabilities = tizen.systeminfo.getCapabilities();
+	 		deviceCameraActive  = deviceCapabilities.camera
+
 	 
-	 
+	 if(deviceCameraActive){
+	  
+		 	
 			 canvas_capture = document.getElementById("canvas_capture"),
 			 context = canvas_capture.getContext("2d"),
 			 video = document.getElementById("video"),
@@ -38,14 +38,16 @@
 			 if(navigator.webkitGetUserMedia) { // WebKit-prefixed
 			  navigator.webkitGetUserMedia(videoObj, function(stream){
 				localStream = stream
-				video.src = window.webkitURL.createObjectURL(localStream);
-				video.pause();
+
 			 }, errBack);
 			 }
-		 }
+			 
+	 }
+ }
 		 
  
- 
+
+
 
  
  
@@ -54,35 +56,60 @@
  
  
 function captureStart(){
-		video.play();
-	 captureInteval = setInterval(cameraCaptuerInterval, 10000)
-	 console.log("captureStart")
-
+	
+	
+	 if(deviceCameraActive){
+		video.src = window.webkitURL.createObjectURL(localStream);
+		//video.play();
+		setTimeout(firstImg, 3000)
+		captureInteval = setInterval(cameraCaptuerInterval, 10000)
+		 console.log("captureStart")
+	 }
+	 
+	 
+	 
+	 function firstImg(){
+		 cameraCaptuerInterval()
+	 }
 }
 
 
-function captureStop(){
-		
-	video.pause();
-	clearInterval(captureInteval)
-	console.log("captureStop")	
+function captureStop(){	 if(deviceCameraActive){			 
+		 video.pause();		 clearInterval(captureInteval)
+		 console.log("captureStop")
+	 }
+	 
+	 endGPSFn()
+
 }
 
 
 function cameraCaptuerInterval(){
-	snapshot()
+	video.play();
+	console.log("camera on")
+	
+	setTimeout(cameraDelaySeco,2000)
+	function cameraDelaySeco(){
+		snapshot()	
+	}
+	
+	
 }
 
 
-function snapshot() {
-	 
-   ctx.drawImage(video, 0, 0);
-   imageData= canvas_capture.toDataURL();
-   console.log(canvas_capture.toDataURL())
-
+function snapshot() {	if(deviceCameraActive){ 	
+	   ctx.drawImage(video, 0, 0,320,320);		
+	   imageData= canvas_capture.toDataURL("data:image/png",1);		
+	   console.log(canvas_capture.toDataURL())		
+	   	   video.pause();
+	   console.log("camera off")
+	   //sandData		
+	   captureSend()
+	}
    
    //파일로 생성
 
+   /*
    var text  = imageData.split(",")
 
    
@@ -122,7 +149,7 @@ function snapshot() {
      },"UTF-8");
 
     });
-
+*/
 }
 
 

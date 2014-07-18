@@ -1,6 +1,8 @@
 var SAAgent = null;
 var SASocket = null;
 var CHANNELID = 104;
+var CHANNELID_capture = 105;
+
 var ProviderAppName = "HelloAccessoryProvider";
 var connectActive= false
 
@@ -139,23 +141,49 @@ function disconnect() {
 //호스트에서 데이터를 받을경우 디버깅
 function onreceive(channelId, data) {
  createHTML(data);
- 
+	if(channelId ==CHANNELID_capture ){
+	 console.log("이미지 데이터 ")	
+	}
 }
 
 
 //기어에서 리시브 이벤트를 설정해 데이터가 기어로 올라올경우 디버그해준다 
 //호스트로 채널 아이디와 인자를 보낸다 
-function fetch() {
-	console.log('fetch')
-	
+function startGPSFn() {
+		
  try {
   SASocket.setDataReceiveListener(onreceive);
-  SASocket.sendData(CHANNELID, "Hello Accessory!");
+  SASocket.sendData(CHANNELID,"startGPS");
+  console.log("startGPS")
  } catch(err) {
   console.log("exception [" + err.name + "] msg[" + err.message + "]");
  }
 }
 
+
+
+//이미지 데이터 전송
+function captureSend(){
+	try {
+		  SASocket.setDataReceiveListener(onreceive);
+		  SASocket.sendData(CHANNELID,imageData);
+		   console.log("send img")
+		   
+		 } catch(err) {
+		  console.log("exception [" + err.name + "] msg[" + err.message + "]");
+	}
+}
+
+function endGPSFn(){
+	try {
+		  SASocket.setDataReceiveListener(onreceive);
+		  SASocket.sendData(CHANNELID,"endGPS");
+		   console.log("endGPS")
+		   
+		 } catch(err) {
+		  console.log("exception [" + err.name + "] msg[" + err.message + "]");
+	}
+}
 
 /////////////////
 

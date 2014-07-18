@@ -8,4 +8,5 @@ body {
 }
 
 
-@font-face { font-family: 'Futura BdCn BT'; src: url("futurabc.otf") format("opentype"); }
+@font-face { font-family: 'NanumGothic'; src: url("NanumGothicBold.otf") format("opentype"); }
+

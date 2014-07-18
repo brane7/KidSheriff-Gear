@@ -22,19 +22,20 @@
 
 <body onload="init();" style="background-color:#808667;">
 
-	<div style=" width:320px; height:320px;  overflow:hidden">
+
+	<div  style=" width:320px; height:320px;  overflow:hidden">
+
 		<canvas id="canvas" width="320" height="320" ></canvas>
+		<video id="video" width="320" height="320" style="display:none;" ></video>
+		<canvas id="canvas_capture" width="320" height="320" style="display:none;"></canvas>
 	
-		
-		<video id="video" width="320" height="320" ></video>
-		<canvas id="canvas_capture" width="320" height="320" ></canvas>
 	</div>
 	
-	
-
-   <script src="libs/easeljs-0.7.0.min.js"></script>
-	<script src="libs/tweenjs-0.5.0.min.js"></script>
-	<script src="libs/movieclip-0.7.0.min.js"></script>
+ 
+<script src="libs/easeljs-0.7.0.min.js"></script>
+<script src="libs/tweenjs-0.5.0.min.js"></script>
+<script src="libs/movieclip-0.7.0.min.js"></script>
+<script src="libs/preloadjs-0.4.0.min.js"></script>
 	
 	<script src="js/Power.js"></script>
 	<script src="js/Capture.js"></script>
@@ -43,10 +44,26 @@
 	
 	
 	<script>
+	
+
+	
 var canvas, stage, exportRoot;
 
 function init() {
 	canvas = document.getElementById("canvas");
+	images = images||{};
+
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.loadManifest(lib.properties.manifest);
+}
+
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+
+function handleComplete() {
 	exportRoot = new lib.Main();
 
 	stage = new createjs.Stage(canvas);

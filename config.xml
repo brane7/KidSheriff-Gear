@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/Sheriff" version="1.0.0" viewmodes="maximized">
-    <tizen:application id="kP1G60ljcP.Sheriff" package="kP1G60ljcP" required_version="2.2"/>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://brane7/Sheriff" version="1.0.0" viewmodes="fullscreen">
+    <tizen:application id="NOtmtYSU7H.Sheriff" package="NOtmtYSU7H" required_version="2.2"/>
     <content src="index.html"/>
+    <description xml:lang="en-gb">[Sheriff] aims to lost, prevent juvenile crime and track</description>
+    <description xml:lang="ko-kr">[보안관]은 미아 방지, 미성년 범죄 예방 및 추적을 목표로 한다.</description>
     <feature name="http://tizen.org/feature/screen.size.all"/>
-    <icon src="thumImg.jpg" height="320" width="320"/>
+    <icon src="512.png" height="512" width="512"/>
     <tizen:metadata key="AccessoryServicesLocation" value="res/xml/accessoryservices.xml"/>
-    <name>보안관</name>
+    <name>Sheriff</name>
+    <name xml:lang="en-us">KidSheriff</name>
+    <name xml:lang="ko-kr">아이지킴이 보안관</name>
     <tizen:privilege name="http://developer.samsung.com/privilege/accessoryprotocol"/>
     <tizen:privilege name="http://tizen.org/privilege/power"/>
-    <tizen:privilege name="http://tizen.org/privilege/filesystem.read"/>
-    <tizen:privilege name="http://tizen.org/privilege/filesystem.write"/>
+    <tizen:setting background-support="enable" encryption="disable" hwkey-event="enable"/>
 </widget>
